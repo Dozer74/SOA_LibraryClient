@@ -1,6 +1,6 @@
-﻿namespace LibraryClient
+﻿namespace LibraryClient.Forms
 {
-    partial class BookDetail
+    partial class BookCreate
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookDetail));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookCreate));
             this.pbCover = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUpdateAuthors = new System.Windows.Forms.Button();
@@ -42,8 +42,9 @@
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbDesc = new System.Windows.Forms.RichTextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbCover)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -51,7 +52,8 @@
             // 
             // pbCover
             // 
-            this.pbCover.Image = ((System.Drawing.Image)(resources.GetObject("pbCover.Image")));
+            this.pbCover.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbCover.Image = global::LibraryClient.Properties.Resources.book_cover_placeholder;
             this.pbCover.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbCover.InitialImage")));
             this.pbCover.Location = new System.Drawing.Point(16, 15);
             this.pbCover.Margin = new System.Windows.Forms.Padding(4);
@@ -60,6 +62,7 @@
             this.pbCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCover.TabIndex = 0;
             this.pbCover.TabStop = false;
+            this.pbCover.Click += new System.EventHandler(this.pbCover_Click);
             // 
             // groupBox1
             // 
@@ -98,7 +101,7 @@
             this.lbAuthors.Name = "lbAuthors";
             this.lbAuthors.Size = new System.Drawing.Size(315, 22);
             this.lbAuthors.TabIndex = 9;
-            this.lbAuthors.Text = "label5";
+            this.lbAuthors.Text = "Укажите авторов";
             // 
             // label4
             // 
@@ -182,15 +185,17 @@
             this.tbDesc.TabIndex = 0;
             this.tbDesc.Text = "";
             // 
-            // button2
+            // btnSave
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(490, 457);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 30);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Сохранить";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnSave.Location = new System.Drawing.Point(490, 457);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 30);
+            this.btnSave.TabIndex = 8;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // button1
             // 
@@ -203,22 +208,27 @@
             this.button1.Text = "Закрыть";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // BookDetail
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Image files (*.jpg, *.bmp, *.png, *.jpeg) |*.jpg;*.bmp;*.png;*.jpeg";
+            // 
+            // BookCreate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 499);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pbCover);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "BookDetail";
+            this.Name = "BookCreate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "BookDetail";
-            this.Load += new System.EventHandler(this.BookDetail_Load);
+            this.Text = "Добавить книгу";
+            this.Load += new System.EventHandler(this.BookCreate_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbCover)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -241,8 +251,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RichTextBox tbDesc;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnUpdateAuthors;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

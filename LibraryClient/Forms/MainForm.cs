@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibraryClient.Controls;
-using LibraryClient.Models;
 
-namespace LibraryClient
+namespace LibraryClient.Forms
 {
     public partial class MainForm : Form
     {
         private readonly ApiClient _client;
         private readonly AuthorList _authorListControl;
         private readonly BooksList _booksListControl;
+        private IReloadable _currentControl;
 
         public MainForm()
         {
@@ -28,13 +19,19 @@ namespace LibraryClient
             _booksListControl = new BooksList(_client);
         }
 
-        private void SetControl(Control control)
+        private bool SetControl(Control control)
         {
+            if (_currentControl == control)
+            {
+                return false;
+            }
             panelPlaceholder.Controls.Clear();
             panelPlaceholder.Controls.Add(control);
             control.Dock = DockStyle.Fill;
+            _currentControl = control as IReloadable;
 
             Text = control == _authorListControl ? "Список авторов" : "Список книг";
+            return true;
         }
 
         private void btnAuthors_Click(object sender, EventArgs e)
@@ -47,17 +44,37 @@ namespace LibraryClient
             SetControl(_booksListControl);
         }
 
-        private void btnBooks_Click_1(object sender, EventArgs e)
+        private void btnBooks_Click(object sender, EventArgs e)
         {
             SetControl(_booksListControl);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnCreateAuthor_Click(object sender, EventArgs e)
         {
-            var authorDetails = new AuthorDetail(_client);
+            var authorDetails = new AuthorCreate(_client);
             if (authorDetails.ShowDialog(this) == DialogResult.OK)
             {
-                SetControl(_authorListControl);
+                if (!SetControl(_authorListControl)) // authors list is active already
+                {
+                    _currentControl.Reload();
+                }
+            }
+        }
+
+        private void btnReload_Click(Object sender, EventArgs e)
+        {
+            _currentControl?.Reload();
+        }
+
+        private void btnCreateBook_Click(Object sender, EventArgs e)
+        {
+            var form = new BookCreate(_client);
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                if (!SetControl(_booksListControl)) // books list is active already
+                {
+                    _currentControl.Reload();
+                }
             }
         }
     }

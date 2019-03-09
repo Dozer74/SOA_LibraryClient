@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,13 @@ namespace LibraryClient
             {
                 return null;
             }
+        }
+
+        public static Byte[] ImageToBytes(Image img)
+        {
+            var ms = new MemoryStream();
+            img.Save(ms, ImageFormat.Jpeg);
+            return ms.ToArray();
         }
     }
 }

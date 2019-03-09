@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibraryClient.Models;
 
-namespace LibraryClient
+namespace LibraryClient.Forms
 {
     public partial class BookDetail : Form
     {
         private readonly ApiClient _client;
         private List<Genre> _genres;
         private readonly int _bookId;
+        private bool _imageChanged;
 
         private Book _book;
 
@@ -45,8 +43,12 @@ namespace LibraryClient
             tbTitle.Text = _book.Title;
             tbYear.Text = _book.Year.ToString();
             cbGenre.SelectedItem = _book.Genre;
-            pbCover.Image = _book.Cover;
-            
+
+            if (_book.Cover != null)
+            {
+                pbCover.Image = _book.Cover;
+            }
+
             lbAuthors.Text = FormatAuthorNames(_book.Authors);
         }
 
@@ -59,6 +61,53 @@ namespace LibraryClient
             {
                 _book.Authors = selectAuthors.SelectedAuthors.ToList();
                 lbAuthors.Text = FormatAuthorNames(_book.Authors);
+            }
+        }
+
+        private async void btnSave_Click(Object sender, EventArgs e)
+        {
+            var book = new BookPost
+            {
+                Id = _bookId,
+                AuthorsIds = _book.Authors.Select(a => a.Id).ToList(),
+                Description = tbDesc.Text,
+                Genre = _genres[cbGenre.SelectedIndex].Id,
+                Title = tbTitle.Text,
+            };
+
+            // If book has not default cover picture
+            if (_book.Cover != null && _imageChanged)
+            {
+                book.CoverBytes = Helpers.ImageToBytes(pbCover.Image);
+            }
+
+            if (int.TryParse(tbYear.Text, out var year))
+            {
+                book.Year = year;
+            }
+
+            await _client.UpdateBook(book);
+        }
+
+        private void pbCover_Click(Object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
+            {
+                pbCover.Image = Image.FromFile(openFileDialog1.FileName);
+                _imageChanged = true;
+            }
+        }
+
+        private async void btnRemove_Click(Object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                    $"Удалить книгу \"{_book.Title}\"?\nИнформация будет удалена безвозвратно",
+                    "Подтвердите удаление", 
+                    MessageBoxButtons.YesNoCancel, 
+                    MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            {
+                await _client.RemoveBook(_bookId);
+                await Task.Delay(200);
             }
         }
     }

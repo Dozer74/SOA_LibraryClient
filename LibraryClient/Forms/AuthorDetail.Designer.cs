@@ -1,4 +1,4 @@
-﻿namespace LibraryClient
+﻿namespace LibraryClient.Forms
 {
     partial class AuthorDetail
     {
@@ -104,7 +104,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(286, 177);
-            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabIndex = 100;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Информация о авторе";
             // 
@@ -131,7 +131,7 @@
             this.tbYearDeath.Location = new System.Drawing.Point(202, 125);
             this.tbYearDeath.Name = "tbYearDeath";
             this.tbYearDeath.Size = new System.Drawing.Size(69, 22);
-            this.tbYearDeath.TabIndex = 2;
+            this.tbYearDeath.TabIndex = 3;
             // 
             // groupBox2
             // 
@@ -141,7 +141,7 @@
             this.groupBox2.Location = new System.Drawing.Point(304, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(459, 177);
-            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabIndex = 101;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Биография";
             // 
@@ -151,7 +151,7 @@
             this.tbBio.Location = new System.Drawing.Point(3, 18);
             this.tbBio.Name = "tbBio";
             this.tbBio.Size = new System.Drawing.Size(453, 156);
-            this.tbBio.TabIndex = 0;
+            this.tbBio.TabIndex = 4;
             this.tbBio.Text = "";
             // 
             // groupBox3
@@ -163,7 +163,7 @@
             this.groupBox3.Location = new System.Drawing.Point(8, 195);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(755, 240);
-            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabIndex = 102;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Книги";
             // 
@@ -182,7 +182,7 @@
             this.listView.Margin = new System.Windows.Forms.Padding(5);
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(749, 219);
-            this.listView.TabIndex = 6;
+            this.listView.TabIndex = 5;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             // 
@@ -224,7 +224,7 @@
             this.button2.Location = new System.Drawing.Point(557, 441);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 30);
-            this.button2.TabIndex = 7;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Сохранить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);

@@ -1,4 +1,4 @@
-﻿namespace LibraryClient
+﻿namespace LibraryClient.Forms
 {
     partial class SelectAuthorsForm
     {

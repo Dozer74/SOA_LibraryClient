@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using LibraryClient.Models;
 
-namespace LibraryClient
+namespace LibraryClient.Forms
 {
     public partial class AuthorDetail : Form
     {

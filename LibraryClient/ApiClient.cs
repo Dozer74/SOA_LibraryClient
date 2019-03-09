@@ -22,34 +22,38 @@ namespace LibraryClient
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        private StringContent BuildContent(object obj)
+        {
+            var json = JsonConvert.SerializeObject(obj);
+            return new StringContent(json, Encoding.UTF8, "application/json");
+        }
+
+        private async Task<T> GetObject<T>(string url)
+        {
+            var response = await GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<T>();
+            }
+
+            return default(T);
+        }
+
         #region Authors
 
         public async Task<List<Author>> GetAuthors()
         {
-            var response = await GetAsync("authors");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<List<Author>>();
-            }
-
-            return null;
+            return await GetObject<List<Author>>("authors");
         }
 
         public async Task<Author> GetAuthor(int id)
         {
-            var response = await GetAsync($"authors/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<Author>();
-            }
-
-            return null;
+            return await GetObject<Author>($"authors/{id}");
         }
 
         public async Task<bool> UpdateAuthor(AuthorPost author)
         {
-            var json = JsonConvert.SerializeObject(author);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = BuildContent(author);
             var response = await PutAsync($"authors/{author.Id}/", content);
 
             return response.IsSuccessStatusCode;
@@ -57,9 +61,8 @@ namespace LibraryClient
 
         public async Task<bool> CreateAuthor(AuthorPost author)
         {
-            var json = JsonConvert.SerializeObject(author);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await PostAsync($"authors/{author.Id}/", content);
+            var content = BuildContent(author);
+            var response = await PostAsync("authors/", content);
 
             return response.IsSuccessStatusCode;
         }
@@ -91,10 +94,31 @@ namespace LibraryClient
             return null;
         }
 
+        public async Task<bool> UpdateBook(BookPost book)
+        {
+            var content = BuildContent(book);
+            var response = await PutAsync($"books/{book.Id}/", content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> RemoveBook(int bookId)
+        {
+            var response = await DeleteAsync($"books/{bookId}/");
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> CreateBook(BookPost book)
+        {
+            var content = BuildContent(book);
+            var response = await PostAsync("books/", content);
+            return response.IsSuccessStatusCode;
+        }
+
         #endregion
 
         #region Genres
-        
+
         public async Task<List<Genre>> GetGenres()
         {
             var response = await GetAsync("genres");
@@ -109,5 +133,6 @@ namespace LibraryClient
         #endregion
 
 
+        
     }
 }

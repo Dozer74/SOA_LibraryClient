@@ -53,16 +53,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClient.cs" />
-    <Compile Include="AuthorDetail.cs">
+    <Compile Include="Controls\IReloadable.cs" />
+    <Compile Include="Controls\SaveProgress.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SaveProgress.Designer.cs">
+      <DependentUpon>SaveProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AuthorCreate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthorDetail.Designer.cs">
+    <Compile Include="Forms\AuthorCreate.Designer.cs">
+      <DependentUpon>AuthorCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AuthorDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AuthorDetail.Designer.cs">
       <DependentUpon>AuthorDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="BookDetail.cs">
+    <Compile Include="Forms\BookCreate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BookDetail.Designer.cs">
+    <Compile Include="Forms\BookCreate.Designer.cs">
+      <DependentUpon>BookCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BookDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BookDetail.Designer.cs">
       <DependentUpon>BookDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\AuthorList.cs">
@@ -78,10 +97,10 @@
       <DependentUpon>BooksList.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Author.cs" />
@@ -89,16 +108,25 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectAuthorsForm.cs">
+    <Compile Include="Forms\SelectAuthorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectAuthorsForm.Designer.cs">
+    <Compile Include="Forms\SelectAuthorsForm.Designer.cs">
       <DependentUpon>SelectAuthorsForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AuthorDetail.resx">
+    <EmbeddedResource Include="Controls\SaveProgress.resx">
+      <DependentUpon>SaveProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AuthorCreate.resx">
+      <DependentUpon>AuthorCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AuthorDetail.resx">
       <DependentUpon>AuthorDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BookDetail.resx">
+    <EmbeddedResource Include="Forms\BookCreate.resx">
+      <DependentUpon>BookCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BookDetail.resx">
       <DependentUpon>BookDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AuthorList.resx">
@@ -107,7 +135,7 @@
     <EmbeddedResource Include="Controls\BooksList.resx">
       <DependentUpon>BooksList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -118,8 +146,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SelectAuthorsForm.resx">
+    <EmbeddedResource Include="Forms\SelectAuthorsForm.resx">
       <DependentUpon>SelectAuthorsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -135,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\book-cover-placeholder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

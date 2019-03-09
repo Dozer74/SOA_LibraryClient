@@ -27,6 +27,8 @@ namespace LibraryClient.Models
 
         [JsonProperty(PropertyName = "books")]
         public List<Book> Books { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 
     public class AuthorPost

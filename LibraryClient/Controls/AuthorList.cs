@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using LibraryClient.Forms;
 using LibraryClient.Models;
 
 namespace LibraryClient.Controls
 {
-    public partial class AuthorList : UserControl
+    public partial class AuthorList : UserControl, IReloadable
     {
         private readonly ApiClient _client;
         private List<Author> _authors;
@@ -16,22 +18,34 @@ namespace LibraryClient.Controls
             InitializeComponent();
         }
 
-        private async void ReloadAuthors()
+        public async void Reload()
         {
             // Reloads authors
             _authors = await _client.GetAuthors();
+            ShowAuthors();
+        }
 
+        private void ShowAuthors()
+        {
             // Updates listView
             var items = new List<ListViewItem>(_authors.Count);
+            var filter = textBox1.Text.ToLower();
             foreach (var author in _authors)
             {
+
+                if (!string.IsNullOrWhiteSpace(filter) &&
+                    !author.FullName.ToLower().Contains(filter))
+                {
+                    continue;
+                }
+
                 var lifeYears = author.YearBirth.ToString();
                 if (author.YearDeath != null)
                 {
-                    lifeYears += " - "+author.YearDeath;
+                    lifeYears += " - " + author.YearDeath;
                 }
 
-                items.Add(new ListViewItem(new []
+                items.Add(new ListViewItem(new[]
                 {
                     $"{author.FirstName} {author.LastName}",
                     lifeYears,
@@ -45,12 +59,7 @@ namespace LibraryClient.Controls
 
         private void AuthorList_Load(object sender, EventArgs e)
         {
-            ReloadAuthors();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ReloadAuthors();
+            Reload();
         }
 
         private void listView_DoubleClick(object sender, EventArgs e)
@@ -66,8 +75,13 @@ namespace LibraryClient.Controls
             var detailForm = new AuthorDetail(_client, authorId);
             if (detailForm.ShowDialog(this) == DialogResult.OK)
             {
-                ReloadAuthors();
+                Reload();
             }
+        }
+
+        private void textBox1_TextChanged(Object sender, EventArgs e)
+        {
+            ShowAuthors();
         }
     }
 }
